@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script>
+    <style>
+        table {
+            text-align: center;
+        }
+        tfoot {
+            display: table-header-group;
+        }
+    </style>
+
+</head>
+<body>
+<table id="tabel" class="display" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Värv</th>
+        <th>Kuju</th>
+        <th>Suurus cm</th>
+        <th>Koht</th>
+        <th>Materjal</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+        <th>Sinine</th>
+        <th>Ring</th>
+        <th>30</th>
+        <th>Pööning</th>
+        <th>Polüester</th>
+    </tr>
+    </tfoot>
+    <tbody>
+    <tr>
+        <td>Kollane</td>
+        <td>Romb</td>
+        <td>78</td>
+        <td>Elutuba</td>
+        <td>Vill</td>
+    </tr>
+    <tr>
+        <td>Roheline</td>
+        <td>Ovaal</td>
+        <td>95</td>
+        <td>Esik</td>
+        <td>Puuvill</td>
+    </tr>
+    <tr>
+        <td>Pruun</td>
+        <td>Ristkülik</td>
+        <td>38</td>
+        <td>Tagatuba</td>
+        <td>Polüester</td>
+    </tr>
+    <tr>
+        <td>Lilla</td>
+        <td>Ring</td>
+        <td>23</td>
+        <td>Köök</td>
+        <td>Vill</td>
+    </tr>
+    <tr>
+        <td>Valge</td>
+        <td>Ovaal</td>
+        <td>97</td>
+        <td>Vannituba</td>
+        <td>Siid</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<script>
+    $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        $('#tabel tfoot th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text" placeholder="Otsi '+title+'" />' );
+        } );
+
+        // DataTable
+        var table = $('#tabel').DataTable();
+
+        // Apply the search
+        table.columns().every( function () {
+            var that = this;
+
+            $( 'input', this.footer() ).on( 'keyup change', function () {
+                if ( that.search() !== this.value ) {
+                    that
+                            .search( this.value )
+                            .draw();
+                }
+            } );
+        } );
+    } );
+</script>
+</body>
+</html>
